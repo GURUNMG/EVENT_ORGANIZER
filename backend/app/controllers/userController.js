@@ -1,37 +1,25 @@
-const bcrypt = require('bcrypt');
 const userService = require('../services/userService');
 
-async function register(req, res) {
-  const { userName, email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
+class UserController {
+  async registerUser(req, res) {
+    try {
+      const { userName, email, password } = req.body;
+      await userService.registerUser(userName, email, password);
+      res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
 
-  try {
-    await userService.createUser(userName, email, hashedPassword);
-    res.status(201).send('User registered successfully.');
-  } catch (error) {
-    res.status(500).send('An error occurred.');
+  async loginUser(req, res) {
+    try {
+      const { email, password } = req.body;
+      const token = await userService.loginUser(email, password);
+      res.status(200).json({ token, message:"login success"});
+    } catch (error) {
+      res.status(401).json({ error: error.message });
+    }
   }
 }
 
-async function login(req, res) {
-  const { email, password } = req.body;
-
-  try {
-    const user = await userService.findUserByEmail(email);
-    if (!user) {
-      return res.status(401).send('Authentication failed.');
-    }
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).send('Authentication failed.');
-    }
-    res.status(200).send('Login successful.');
-  } catch (error) {
-    res.status(500).send('An error occurred.');
-  }
-}
-
-module.exports = {
-  register,
-  login,
-};
+module.exports = new UserController();

@@ -1,0 +1,17 @@
+
+
+.background-image-container {
+    background-image:url("../image/chatease.png");
+    width: 100%;
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+  }
+  
+
+  
+
+  .reactions:hover {
+    color: rgb(73, 73, 220);
+  }

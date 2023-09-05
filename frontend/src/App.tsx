@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import Frontpage from './components/Frontpage';
+import Homepage from './components/Postdisplay';
+import Signin from './components/Signin';
+import { AdminRegister } from './components/AdminRegister';
+import AdminLogin from './components/AdminLogin';
+ function App(){
 
-function App() {
+  const handlePostSubmit = (caption:any, image:any) => {
+    // Implement your logic to submit the post with caption and image
+    console.log('Caption:', caption);
+    console.log('Image:', image);
+  };
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div className='App'>  
+    <BrowserRouter>
+      <Routes>
+          <Route path="event/app/v1/" element={<Frontpage/>} />
+          <Route path="event/app/v1/admin-register" element={<AdminRegister/>} />
+          <Route path="event/app/v1/login" element={<Signin/>} />
+          <Route path="event/app/v1/admin-login" element={<AdminLogin/>} />
+          <Route path="/event/app/v1/homepage/:email" element={<Homepage/>}></Route>
+          {/* <Route path="/chatease/register" element={<Register/>}></Route> */}
+          {/* <Route path='/chatease/reset' element={<Forgot/>}></Route>    */}
+      </Routes>
+    </BrowserRouter> 
+  </div>)
 }
-
 export default App;
