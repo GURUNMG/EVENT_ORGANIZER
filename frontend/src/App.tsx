@@ -6,6 +6,8 @@ import Homepage from './components/Postdisplay';
 import Signin from './components/Signin';
 import { AdminRegister } from './components/AdminRegister';
 import AdminLogin from './components/AdminLogin';
+import Userpost from './components/Userpost';
+import Postdisplay from './components/Postdisplay';
  function App(){
 
   const handlePostSubmit = (caption:any, image:any) => {
@@ -16,13 +18,14 @@ import AdminLogin from './components/AdminLogin';
   
   return (
     <div className='App'>  
+     <Postdisplay/> 
     <BrowserRouter>
       <Routes>
           <Route path="event/app/v1/" element={<Frontpage/>} />
           <Route path="event/app/v1/admin-register" element={<AdminRegister/>} />
           <Route path="event/app/v1/login" element={<Signin/>} />
           <Route path="event/app/v1/admin-login" element={<AdminLogin/>} />
-          <Route path="/event/app/v1/homepage/:email" element={<Homepage/>}></Route>
+          <Route path="/event/app/v1/homepage/:email" element={<Userpost/>}></Route>
           {/* <Route path="/chatease/register" element={<Register/>}></Route> */}
           {/* <Route path='/chatease/reset' element={<Forgot/>}></Route>    */}
       </Routes>

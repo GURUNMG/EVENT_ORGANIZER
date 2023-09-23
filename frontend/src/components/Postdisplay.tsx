@@ -24,7 +24,7 @@ interface userpost{
 }
 
 
-const Homepage=()=>{
+const Postdisplay=()=>{
     const[image,setImage]=useState<File|null>(null);
     const[postId,setPostId]=useState<String>('')
     const [value,setValue]=useState<null|HTMLElement>(null);
@@ -37,7 +37,7 @@ const Homepage=()=>{
     const open1=Boolean(value1);
     
     useEffect(() => {
-      axios.get('http://localhost:8081/chatease/allpost')
+      axios.get('http://localhost:3001/event/app/v1/allpost')
           .then(response => {
               setAllPost(response.data.reverse());
               
@@ -61,6 +61,7 @@ const Homepage=()=>{
     
     return(  
           <>
+          <h2>hello gurubharan</h2>
           {allPost?.map(post=>(
             <Grid key={post.id}>
             <Grid container display="flex" justifyContent="center">
@@ -68,7 +69,7 @@ const Homepage=()=>{
             <CardHeader      
               avatar={
                 <Avatar>
-                 {post?.userName.charAt(0).toUpperCase()}
+                 {/* {post?.userName.charAt(0).toUpperCase()} */}
                   
                 </Avatar>
               }
@@ -94,6 +95,7 @@ const Homepage=()=>{
              <CardMedia
              component="img"
              height="220"
+            //  src={require('../../../backend/app/uploads/1694261870328-366212752-logo2.png')}
             //  src={require(`../media/${post.image}`)}
              alt="abc"
              />
@@ -107,7 +109,8 @@ const Homepage=()=>{
           </Grid>
           </Grid>
           ))}
-          </>     
+          </>
+             
     )
 }
-export default Homepage;
+export default Postdisplay;

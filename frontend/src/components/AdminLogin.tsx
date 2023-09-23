@@ -39,7 +39,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
           setAlertSeverity("success")
           setResponseMessage(response.data.message)
           setTimeout(()=>{
-            navigate(`/event/app/v1/admin-homepage/${encodeURIComponent(email)}`);
+            navigate(`/event/app/v1/homepage/${encodeURIComponent(email)}`);
           }, 2000)
         }}
         ).catch((error)=>{
@@ -60,7 +60,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
       navigate("/chatease/reset");
     }
     const change=()=>{
-        navigate('/event/app/v1/admin-login')
+        navigate('/event/app/v1/admin-register')
     }
   return(
     <Grid container my={1}>
@@ -81,7 +81,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
                         <Link  href="" onClick={resetPassword}>Forgot password?</Link>
                         <Button type="submit" variant="contained" size="small">LOGIN</Button>
                       </Stack>
-                    <Grid item my={2}>Already have an account?<Link  href="" onClick={change}>Login</Link></Grid>
+                    <Grid item my={2}>New Admin User?<Link  href="" onClick={change}>Register</Link></Grid>
 
                   </Grid>
 

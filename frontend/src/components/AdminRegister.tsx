@@ -80,7 +80,14 @@ export const AdminRegister=()=>{
     return (
    
       <>
-        <Grid container my={1} justifyContent="center">
+    
+
+      <Grid container>
+      <Grid container> 
+       <Grid item sx={{height:550,width:650}} className='background-image-container'>
+       </Grid>  
+       <Grid container sx={{width:400,height:490,my:2,mx:'auto'}}>
+             <Grid container my={1} justifyContent="center">
           <img src={logo} alt="asa" width="10%" height="90%"></img>
           <span style={{color:"blue",fontSize:"22px"}}>REGISTER</span>
         </Grid>
@@ -97,7 +104,7 @@ export const AdminRegister=()=>{
                 </Button><Button type="submit" variant="contained" size="medium">submit</Button>
               </Stack>
             </Grid>
-            <Grid item my={2}>Already have an account?<Link  href="" onClick={change}>Login</Link></Grid>
+            <Grid item my={2}>Already have an account?<Link  href="" onClick={change}>Admin Login</Link></Grid>
             <Grid item my={2}>Register for User?<Link  href="" onClick={changeBack}>User Registration</Link></Grid>
           
           </form>
@@ -107,6 +114,9 @@ export const AdminRegister=()=>{
           {responseMessage}
         </Alert>
       </Snackbar>
+       </Grid>
+      </Grid>
+    </Grid>
      </>
 )}
 

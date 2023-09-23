@@ -23,7 +23,7 @@ const Homepage=()=>{
           <Grid container justifyContent="center" sx={{marginTop:'30px'}}>
            <Grid item>
             <Userpost/>
-            <Postdisplay/>
+            {/* <Postdisplay/> */}
 
           </Grid> 
           </Grid>

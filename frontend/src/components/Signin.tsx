@@ -59,6 +59,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     const resetPassword = () =>{
       navigate("/chatease/reset");
     }
+    const change=()=>{
+      navigate('/event/app/v1/')
+   }
   return(
     <Grid container my={1}>
         <Grid container> 
@@ -79,6 +82,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
                         <Button type="submit" variant="contained" size="small">LOGIN</Button>
                       </Stack>
                   </Grid>
+                  <Grid item my={2}>New user?<Link  href="" onClick={change}>Register</Link></Grid>
               </form>
             </Grid>
           </Grid> 
