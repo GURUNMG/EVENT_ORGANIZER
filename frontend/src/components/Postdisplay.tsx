@@ -95,12 +95,13 @@ const Postdisplay=()=>{
              <CardMedia
              component="img"
              height="220"
+             src={`backend/app/${post.image}`}
             //  src={require('../../../backend/app/uploads/1694261870328-366212752-logo2.png')}
             //  src={require(`../media/${post.image}`)}
              alt="abc"
              />
              }
-           
+            <h2>post.image</h2>
             <CardContent>     
                 <Stack direction="row"><span>{post.caption}</span></Stack>
                 <Stack direction="row" my={4} spacing={9}><Button variant="text" size="small" onClick={change}> <ThumbUpOutlinedIcon></ThumbUpOutlinedIcon> {count}</Button><Button variant="text" size="small" onClick={text1}> {count2 && <TextField variant="outlined" fullWidth/>}<CommentOutlinedIcon></CommentOutlinedIcon></Button> <Button variant="text" size="small"><ShareOutlinedIcon></ShareOutlinedIcon></Button></Stack>

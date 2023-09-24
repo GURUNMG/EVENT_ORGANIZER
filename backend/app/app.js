@@ -21,17 +21,28 @@ app.use(cors());
 app.use(express.json());
 
 // Multer Configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/uploads/guru/'); // Specify the directory where uploaded files will be stored
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + '-' + file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+  // destination: (req, file, cb) => {
+  //   cb(null,path.join(__dirname, '../frontend/src/images')); // Specify the directory where uploaded files will be stored
+  // },
+//   filename: (req, file, cb) => {
+//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+//     cb(null, uniqueSuffix + '-' + file.originalname);
+//   },
+// });
 
-const upload = multer({ storage }); // Create a Multer instance
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     const uploadPath = '../../frontend/src/media/'; // Specify your upload directory
+//     cb(null, uploadPath);
+//   },
+//   filename: (req, file, cb) => {
+//     const uniqueSuffix = Date.now() + '-';
+//     cb(null, uniqueSuffix + file.originalname);
+//   },
+// });
+
+// const upload = multer({ storage }); // Create a Multer instance
 
 
 // Routes
