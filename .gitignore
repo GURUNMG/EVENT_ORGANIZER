@@ -5,6 +5,8 @@
 /frontend/.pnp
 /frontend/.pnp.js
 
+#images
+/frontend/src/media
 # testing
 /frontend/coverage
 

@@ -45,7 +45,8 @@ const Post = require('../models/Post');
 const createPost = async (req, res) => {
   try {
     const { caption, email } = req.body;
-    const image = req.file ? req.file.path : ''; // Store the image path here
+    const image = req.fileName || '';
+    // const image = req.file ? req.file.path : ''; // Store the image path here
     // You can add validation for required fields here
 
     const post = new Post({
