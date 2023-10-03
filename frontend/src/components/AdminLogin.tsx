@@ -39,7 +39,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
           setAlertSeverity("success")
           setResponseMessage(response.data.message)
           setTimeout(()=>{
-            navigate(`/event/app/v1/homepage/${encodeURIComponent(email)}`);
+            navigate(`/event/app/v1/admin-homepage/${encodeURIComponent(email)}`);
           }, 2000)
         }}
         ).catch((error)=>{

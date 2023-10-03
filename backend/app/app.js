@@ -49,6 +49,10 @@ app.use(express.json());
 app.use('/event/app/v1/user', require('./routes/userRoutes'));
 app.use('/event/app/v1/admin', require('./routes/adminRoutes'));
 app.use('/event/app/v1/', require('./routes/postRoutes'));
+app.use('/event/app/v1/registered/', require("./routes/eventRegisterRoutes"));
+app.use('/event/app/v1/userchoice/', require("./routes/userChoiceRoutes"));
+app.use("/event/app/v1/feedback/",require("./routes/feedbackRoutes"));
+// app.use("/event/app/v1/allfeedback",require("./routes/feedbackRoutes"));
 app.post('/sendemail', async (req, res) => {
   try {
       if (!recipientEmail) {

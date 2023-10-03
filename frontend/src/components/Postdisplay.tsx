@@ -15,14 +15,22 @@ import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import DoneIcon from '@mui/icons-material/Done';
+import ClearIcon from '@mui/icons-material/Clear';
+import { green, red } from '@mui/material/colors';
 interface userpost{
   caption:string,
   date:string,
   image:string,
-  id:string,
+  _id:string,
   userName:string
 }
 
+interface useroption{
+  email:string,
+  postId:string,
+  action:string
+}
 
 const Postdisplay=()=>{
     const[image,setImage]=useState<File|null>(null);
@@ -32,9 +40,21 @@ const Postdisplay=()=>{
     const [open, setOpen] =useState(false);
     const [count2,setCount2]=useState(false)
     const[allPost,setAllPost]=useState<userpost[]>();
+    const[userOption, setUserOption]=useState<useroption[]>();
     const [value1,setValue1]=useState<null|HTMLElement>(null);
-    const { email} = useParams<{ email: string}>();    
+    const { email} = useParams<{ email: string}>(); 
+    const [handledPosts, setHandledPosts] = useState<string[]>([]);   
     const open1=Boolean(value1);
+
+    const acceptButtonStyle = {
+      backgroundColor: green[500], // Use green color from MUI's color palette
+      color: 'white', // Set text color to white
+    };
+  
+    const rejectButtonStyle = {
+      backgroundColor: red[500], // Use red color from MUI's color palette
+      color: 'white', // Set text color to white
+    };
     
     useEffect(() => {
       axios.get('http://localhost:3001/event/app/v1/allpost')
@@ -44,7 +64,15 @@ const Postdisplay=()=>{
           })
           .catch(error => {
               console.error('Error fetching posts:', error);
-          });
+      });
+
+      axios.get("http://localhost:3001/event/app/v1/userchoice/done")
+        .then((response)=>{
+          setUserOption(response.data);
+        })
+        .catch((error)=>{
+          console.log("error while fetching",error);
+      })
   }, [open]);
     const change=()=>{
       // axios.post("http://localhost:8080/chatease/like",{})
@@ -58,12 +86,42 @@ const Postdisplay=()=>{
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       setValue(event.currentTarget);
     };
+
+    const handleActionClick = (postId: string, action: 'ACCEPT' | 'REJECT') => {
+      if (!handledPosts.includes(postId)) {
+        // Update the local state to track the handled post
+      console.log("HELLO.................................................................")
+        setHandledPosts([...handledPosts, postId]);
+  
+        // Send a request to your backend to store the user ID and action in the database
+        axios.post('http://localhost:3001/event/app/v1/registered/event', {
+          email,
+          postId,
+          action,
+        })
+        .then((response) => {
+          console.log(`Email ${email} ${action}ed post ${postId}`);
+        })
+        .catch((error) => {
+          if (error.response) {
+            // The request was made, but the server responded with an error
+            console.error('Server Error:', error.response.data);
+          } else if (error.request) {
+            // The request was made, but no response was received
+            console.error('No Response from Server:', error.request);
+          } else {
+            // Something else went wrong
+            console.error('Error:', error.message);
+          }
+        });
+      }
+    };
     
     return(  
           <>
           <h2>hello gurubharan</h2>
           {allPost?.map(post=>(
-            <Grid key={post.id}>
+            <Grid key={post._id}>
             <Grid container display="flex" justifyContent="center">
             <Card sx={{maxWidth:370, maxHeight:500, mx:'auto',my:5}}>
             <CardHeader      
@@ -104,7 +162,45 @@ const Postdisplay=()=>{
             <h2>{post.image}</h2>
             <CardContent>     
                 <Stack direction="row"><span>{post.caption}</span></Stack>
-                <Stack direction="row" my={4} spacing={9}><Button variant="text" size="small" onClick={change}> <ThumbUpOutlinedIcon></ThumbUpOutlinedIcon> {count}</Button><Button variant="text" size="small" onClick={text1}> {count2 && <TextField variant="outlined" fullWidth/>}<CommentOutlinedIcon></CommentOutlinedIcon></Button> <Button variant="text" size="small"><ShareOutlinedIcon></ShareOutlinedIcon></Button></Stack>
+                <Stack direction="row" my={4} mx={0}>
+                  {/* <Button
+                    variant="contained"
+                    // style={acceptButtonStyle} // Apply the green background style
+                    style={{ ...acceptButtonStyle, width: '100%' }}
+                    startIcon={<DoneIcon />}
+                  >
+                    ACCEPT
+                  </Button>
+                  <Button
+                    variant="contained"
+                    style={{ ...rejectButtonStyle, width: '100%' }}
+                    startIcon={<ClearIcon />}
+                  >
+                    REJECT
+                  </Button> */}
+
+
+
+
+                  {!handledPosts.includes(post._id) && (
+                  <>
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: 'green', color: 'white', width: '100%' }}
+                      onClick={() => handleActionClick(post._id, 'ACCEPT')}
+                    >
+                      ACCEPT
+                    </Button>
+                    <Button
+                      variant="contained"
+                      style={{ backgroundColor: 'red', color: 'white', width: '100%' }}
+                      onClick={() => handleActionClick(post._id, 'REJECT')}
+                    >
+                      REJECT
+                    </Button>
+                  </>
+                )}
+                </Stack>
             </CardContent>
           </Card>
           </Grid>
