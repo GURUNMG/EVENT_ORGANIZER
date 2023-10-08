@@ -40,10 +40,11 @@ const Postdisplay=()=>{
     const [open, setOpen] =useState(false);
     const [count2,setCount2]=useState(false)
     const[allPost,setAllPost]=useState<userpost[]>();
-    const[userOption, setUserOption]=useState<useroption[]>();
+    const[userOption, setUserOption]=useState<useroption[]>([]);
     const [value1,setValue1]=useState<null|HTMLElement>(null);
     const { email} = useParams<{ email: string}>(); 
     const [handledPosts, setHandledPosts] = useState<string[]>([]);   
+    const [registeredPosts, setRegisteredPosts] = useState<string[]>([]);
     const open1=Boolean(value1);
 
     const acceptButtonStyle = {
@@ -66,14 +67,19 @@ const Postdisplay=()=>{
               console.error('Error fetching posts:', error);
       });
 
-      axios.get("http://localhost:3001/event/app/v1/userchoice/done")
+      axios.get(`http://localhost:3001/event/app/v1/userchoice/${email}`)
         .then((response)=>{
-          setUserOption(response.data);
+          setUserOption(response.data.choices);
         })
         .catch((error)=>{
           console.log("error while fetching",error);
       })
-  }, [open]);
+  }, [email]);
+  useEffect(() => {
+    // Extract post IDs from userOptions where action is ACCEPT
+    const acceptedPosts = userOption.filter((option) => option.action === 'ACCEPT').map((option) => option.postId);
+    setHandledPosts(acceptedPosts);
+  }, [userOption]);
     const change=()=>{
       // axios.post("http://localhost:8080/chatease/like",{})
       Setcount(count+1)
@@ -87,14 +93,14 @@ const Postdisplay=()=>{
       setValue(event.currentTarget);
     };
 
-    const handleActionClick = (postId: string, action: 'ACCEPT' | 'REJECT') => {
+    const handleActionClick = (postId: string, action: 'ACCEPT') => {
       if (!handledPosts.includes(postId)) {
         // Update the local state to track the handled post
       console.log("HELLO.................................................................")
         setHandledPosts([...handledPosts, postId]);
-  
+        setRegisteredPosts([...registeredPosts, postId]);
         // Send a request to your backend to store the user ID and action in the database
-        axios.post('http://localhost:3001/event/app/v1/registered/event', {
+        axios.post('http://localhost:3001/event/app/v1/userchoice/store', {
           email,
           postId,
           action,
@@ -163,43 +169,22 @@ const Postdisplay=()=>{
             <CardContent>     
                 <Stack direction="row"><span>{post.caption}</span></Stack>
                 <Stack direction="row" my={4} mx={0}>
-                  {/* <Button
+                {registeredPosts.includes(post._id) ? (
+                <Button variant="contained" style={{ backgroundColor: green[500], color: 'white', width: '100%' }} disabled>
+                  REGISTERED
+                </Button>
+              ) : (
+                !handledPosts.includes(post._id) && (
+                  <Button
                     variant="contained"
-                    // style={acceptButtonStyle} // Apply the green background style
-                    style={{ ...acceptButtonStyle, width: '100%' }}
+                    style={{ backgroundColor: green[500], color: 'white', width: '100%' }}
                     startIcon={<DoneIcon />}
+                    onClick={() => handleActionClick(post._id, 'ACCEPT')}
                   >
                     ACCEPT
                   </Button>
-                  <Button
-                    variant="contained"
-                    style={{ ...rejectButtonStyle, width: '100%' }}
-                    startIcon={<ClearIcon />}
-                  >
-                    REJECT
-                  </Button> */}
-
-
-
-
-                  {!handledPosts.includes(post._id) && (
-                  <>
-                    <Button
-                      variant="contained"
-                      style={{ backgroundColor: 'green', color: 'white', width: '100%' }}
-                      onClick={() => handleActionClick(post._id, 'ACCEPT')}
-                    >
-                      ACCEPT
-                    </Button>
-                    <Button
-                      variant="contained"
-                      style={{ backgroundColor: 'red', color: 'white', width: '100%' }}
-                      onClick={() => handleActionClick(post._id, 'REJECT')}
-                    >
-                      REJECT
-                    </Button>
-                  </>
-                )}
+                )
+              )}
                 </Stack>
             </CardContent>
           </Card>

@@ -23,8 +23,8 @@ import PostDisplay1 from './components/PostDisplay1';
   return (
     <div className='App'> 
       {/* <Home/> */}
-      <Home1/> 
-      <PostDisplay1></PostDisplay1>
+      {/* <Home1/>  */}
+      {/* <PostDisplay1></PostDisplay1> */}
     <BrowserRouter>
       <Routes>
           <Route path="event/app/v1/" element={<Frontpage/>} />

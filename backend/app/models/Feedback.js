@@ -6,10 +6,11 @@ const feedbackSchema = new mongoose.Schema({
   feedbackEntries: [
     {
       email: String,
-      increasePreference: [String],
-      timeManagement: String,
-      suggestion: String,
-      overallRating: String,
+      informationGathered : Number,
+      expectation: Number,
+      timeManagement: Number,
+      overallRating: Number,
+      suggestion: String
     },
   ],
 });
