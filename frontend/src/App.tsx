@@ -12,6 +12,7 @@ import Postdisplay from './components/Postdisplay';
 import Home from './components/Home';
 import Home1 from './components/Home1';
 import PostDisplay1 from './components/PostDisplay1';
+import FeedbackForm from './components/FeedbackFrom';
  function App(){
 
   const handlePostSubmit = (caption:any, image:any) => {
@@ -25,6 +26,7 @@ import PostDisplay1 from './components/PostDisplay1';
       {/* <Home/> */}
       {/* <Home1/>  */}
       {/* <PostDisplay1></PostDisplay1> */}
+      {/* <FeedbackForm></FeedbackForm> */}
     <BrowserRouter>
       <Routes>
           <Route path="event/app/v1/" element={<Frontpage/>} />

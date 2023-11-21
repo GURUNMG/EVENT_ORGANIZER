@@ -29,3 +29,6 @@
 # for BACKEND
 /backend/node_modules
 /backend/app/uploads/
+
+# for node_modules
+/node_modules

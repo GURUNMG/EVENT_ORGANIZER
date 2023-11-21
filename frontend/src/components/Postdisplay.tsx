@@ -125,7 +125,6 @@ const Postdisplay=()=>{
     
     return(  
           <>
-          <h2>hello gurubharan</h2>
           {allPost?.map(post=>(
             <Grid key={post._id}>
             <Grid container display="flex" justifyContent="center">
@@ -165,7 +164,7 @@ const Postdisplay=()=>{
              alt="abc"
              />
              }
-            <h2>{post.image}</h2>
+            {/* <h2>{post.image}</h2> */}
             <CardContent>     
                 <Stack direction="row"><span>{post.caption}</span></Stack>
                 <Stack direction="row" my={4} mx={0}>
