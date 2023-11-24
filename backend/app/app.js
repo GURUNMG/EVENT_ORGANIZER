@@ -53,6 +53,7 @@ app.use('/event/app/v1/registered/', require("./routes/eventRegisterRoutes"));
 app.use('/event/app/v1/userchoice/', require("./routes/userChoiceRoutes"));
 app.use("/event/app/v1/feedback/",require("./routes/feedbackRoutes"));
 app.use("/event/app/v1/allfeedback",require("./routes/feedbackRoutes"));
+
 app.post('/sendemail', async (req, res) => {
   try {
       if (!recipientEmail) {

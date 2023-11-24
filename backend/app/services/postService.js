@@ -3,8 +3,11 @@ const Post = require('../models/Post');
 class PostService {
   async createPost(post) {
     try {
-      const { caption, email } = post;
+      const { caption, email, date } = post;
       const image = post.image || ''; // Handle if image is null
+
+      // Parse the date using JavaScript Date object
+      const formattedDate = new Date(date);
 
       // You can add validation for required fields here
 
@@ -12,6 +15,7 @@ class PostService {
         image,
         caption,
         email,
+        date: formattedDate,
       });
 
       await newPost.save();
@@ -31,6 +35,7 @@ class PostService {
 }
 
 module.exports = PostService;
+
 
 // services/postService.js
 // const Post = require('../models/Post');

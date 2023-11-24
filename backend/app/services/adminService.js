@@ -38,6 +38,15 @@ class AdminService {
       throw error;
     }
   }
+
+  async isEmailRegistered(email) {
+    try {
+      const existingAdmin = await Admin.findOne({ email });
+      return !!existingAdmin; // Return true if email is already registered, false otherwise
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = new AdminService();

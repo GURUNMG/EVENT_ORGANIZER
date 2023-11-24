@@ -38,27 +38,58 @@
 //   }
 // };
 
-const PostService = require('../services/postService');
+// const PostService = require('../services/postService');
+// const postService = new PostService();
+// const Post = require('../models/Post');
+
+// const createPost = async (req, res) => {
+//   try {
+//     const { caption, email } = req.body;
+//     const image = req.fileName || '';
+//     // const image = req.file ? req.file.path : ''; // Store the image path here
+//     // You can add validation for required fields here
+
+//     const post = new Post({
+//       image,
+//       caption,
+//       email,
+//     });
+
+//     await post.save();
+
+//     res.status(201).json({ message: 'Post created successfully' });
+//   } catch (error) {
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// };
+
+// async function getAllPosts(req, res) {
+//   try {
+//     const posts = await postService.getAllPosts();
+//     res.json(posts);
+//   } catch (error) {
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
+
+// module.exports = {
+//   createPost,
+//   getAllPosts,
+// };
+
+const PostService = require('../services/PostService');
 const postService = new PostService();
-const Post = require('../models/Post');
 
 const createPost = async (req, res) => {
   try {
-    const { caption, email } = req.body;
+    const { caption, email, date } = req.body;
     const image = req.fileName || '';
-    // const image = req.file ? req.file.path : ''; // Store the image path here
-    // You can add validation for required fields here
 
-    const post = new Post({
-      image,
-      caption,
-      email,
-    });
-
-    await post.save();
+    await postService.createPost({ caption, email, date, image });
 
     res.status(201).json({ message: 'Post created successfully' });
   } catch (error) {
+    console.error('Error creating post:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -68,6 +99,7 @@ async function getAllPosts(req, res) {
     const posts = await postService.getAllPosts();
     res.json(posts);
   } catch (error) {
+    console.error('Error getting posts:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 }

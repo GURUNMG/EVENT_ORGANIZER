@@ -20,6 +20,17 @@ class AdminController {
       res.status(401).json({ error: error.message });
     }
   }
+
+  async checkEmail(req, res) {
+    try {
+      const { email } = req.params;
+      const isEmailRegistered = await adminService.isEmailRegistered(email);
+
+      res.status(200).json({ isEmailRegistered });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 module.exports = new AdminController();
