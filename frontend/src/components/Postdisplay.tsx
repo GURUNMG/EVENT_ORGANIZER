@@ -66,12 +66,35 @@ const PostDisplay = () => {
 
   const handleActionClick = (postId: string, action: 'ACCEPT') => {
     if (!handledPosts.includes(postId)) {
+      // Find the post from allPosts based on postId
+      const selectedPost = allPosts.find(post => post._id === postId);
+  
+      if (!selectedPost) {
+        console.error(`Post with postId ${postId} not found.`);
+        return;
+      }
+  
       setHandledPosts([...handledPosts, postId]);
       setRegisteredPosts([...registeredPosts, postId]);
-
+  
       // Save registered posts to local storage
       saveRegisteredPostsToLocalStorage([...registeredPosts, postId]);
-
+  
+      // Send Axios POST request to store data on the server
+      axios.post('http://localhost:3001/event/app/v1/userchoice/registerd-users/store', {
+        email,
+        postId,
+        date: selectedPost.date, // Use the date from the selected post
+      })
+        .then((response) => {
+          console.log(`Data stored successfully for postId ${postId}`);
+          console.log(selectedPost.date);
+        })
+        .catch((error) => {
+          console.error('Error storing data:', error.message);
+          console.log(selectedPost.date);
+        });
+  
       axios.post('http://localhost:3001/event/app/v1/userchoice/store', {
         email,
         postId,
