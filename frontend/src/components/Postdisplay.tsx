@@ -1,4 +1,4 @@
-import { Grid, Card, CardHeader, Stack, Menu, MenuItem, CardContent, CardMedia, Avatar, Button, Typography } from "@mui/material";
+import { Grid, Card, CardHeader, Stack, Menu, MenuItem, CardContent, CardMedia, Avatar, Button, Typography, useMediaQuery } from "@mui/material";
 import { useState, useEffect } from "react";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -7,6 +7,7 @@ import axios from "axios";
 import DoneIcon from '@mui/icons-material/Done';
 import { green, red } from '@mui/material/colors';
 import { useNavigate,Routes,Route} from 'react-router-dom';
+import Calendar from "./Calendar";
 interface UserPost {
   caption: string;
   date: string;
@@ -125,9 +126,12 @@ const PostDisplay = () => {
     navigate(`/event/app/v1/feedback/store/${email}/${postId}`);
     // navigate('/feedback/app/v1/login')
   };
+  const isLaptopSize = useMediaQuery('(min-width: 960px)');
 
   return (
     <>
+    <Grid container>
+      <Grid xs={12} md={8}>
       {allPosts.map(post => (
         <Grid key={post._id}>
           <Grid container display="flex" justifyContent="center">
@@ -199,6 +203,14 @@ const PostDisplay = () => {
           </Grid>
         </Grid>
       ))}
+      </Grid>
+      {isLaptopSize && 
+        <Grid item xs={12} md={4} sx={{ position: 'fixed', top: '50%', right: '0', marginRight:"5%", transform: 'translateY(-50%)' }}>
+          <Calendar />
+        </Grid>
+      }
+    </Grid>
+    {/* <Calendar></Calendar> */}
     </>
   );
 };

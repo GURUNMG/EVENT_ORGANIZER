@@ -2,31 +2,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Frontpage from './components/Frontpage';
-import Homepage from './components/Postdisplay';
 import Signin from './components/Signin';
 import { AdminRegister } from './components/AdminRegister';
 import AdminLogin from './components/AdminLogin';
 import AdminHome from './components/AdminHome';
-import Userpost from './components/Userpost';
 import Postdisplay from './components/Postdisplay';
-import Home from './components/Home';
-import Home1 from './components/Home1';
-import PostDisplay1 from './components/PostDisplay1';
 import FeedbackForm from './components/FeedbackFrom';
- function App(){
 
-  const handlePostSubmit = (caption:any, image:any) => {
-    // Implement your logic to submit the post with caption and image
-    console.log('Caption:', caption);
-    console.log('Image:', image);
-  };
+ function App(){
   
   return (
     <div className='App'> 
-      {/* <Home/> */}
-      {/* <Home1/>  */}
-      {/* <PostDisplay1></PostDisplay1> */}
-      {/* <FeedbackForm></FeedbackForm> */}
     <BrowserRouter>
       <Routes>
           <Route path="event/app/v1/" element={<Frontpage/>} />

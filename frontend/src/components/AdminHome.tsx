@@ -163,13 +163,23 @@ const AdminHome = () => {
           </Button>
         </Grid>
       </Grid>
-      <Grid container justifyContent="center" sx={{ marginTop: "30px" }}>
+      {/* <Grid container justifyContent="center" sx={{ marginTop: "30px" }}> */}
+        {/* <Grid item> */}
+        {/* </Grid> */}  
+      {/* </Grid> */}
+      <Grid container sx={{ marginTop: "30px", marginLeft: "22%" }}>
         <Grid item>
           <Userpost />
-          <Postdisplay />
         </Grid>
       </Grid>
+        <Postdisplay />
     </div>
   );
 };
 export default AdminHome;
+
+
+      {/* <Grid container justifyContent="center" sx={{ marginTop: "30px" }}> */}
+        {/* <Grid item> */}
+        {/* </Grid> */}  
+      {/* </Grid> */}
