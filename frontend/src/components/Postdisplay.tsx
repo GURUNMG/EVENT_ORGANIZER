@@ -6,13 +6,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import DoneIcon from '@mui/icons-material/Done';
 import { green, red } from '@mui/material/colors';
-
+import { useNavigate,Routes,Route} from 'react-router-dom';
 interface UserPost {
   caption: string;
   date: string;
   image: string;
   _id: string;
   userName: string;
+  email: string;
 }
 
 interface UserOption {
@@ -28,6 +29,9 @@ const PostDisplay = () => {
   const [registeredPosts, setRegisteredPosts] = useState<string[]>([]);
 
   const { email } = useParams<{ email: string }>();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  
   const open1 = Boolean(null);  // Note: I've changed this line to avoid errors, you may need to replace it with your logic.
 
   useEffect(() => {
@@ -108,6 +112,19 @@ const PostDisplay = () => {
         });
     }
   };
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const navigate = useNavigate();  
+  const handleFeedbackClick = (postId: string) => {
+    // Redirect to the feedback page
+    navigate(`/event/app/v1/feedback/store/${postId}`);
+    // navigate('/feedback/app/v1/login')
+  };
 
   return (
     <>
@@ -119,18 +136,25 @@ const PostDisplay = () => {
                 avatar={<Avatar />}
                 action={
                   <Grid>
-                    <IconButton>
+                    {(email === post.email)? ( // Check if email values are equal
+                      <IconButton onClick={handleClick}>
+                        <MoreVertIcon />
+                      </IconButton>
+                    ): (<Button variant="contained" onClick={() => handleFeedbackClick(post._id)}>FB</Button>)}
+                    {/* <IconButton onClick={handleClick}>
                       <MoreVertIcon />
-                    </IconButton>
+                    </IconButton> */}
                     <Menu
                       id="item"
-                      open={open1}
-                      anchorEl={null}
-                      onClose={() => { }}>
-                      <MenuItem>EditPost</MenuItem>
-                      <MenuItem>DeletePost</MenuItem>
+                      anchorEl={anchorEl}
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem>Enable Feedcack</MenuItem>
+                      {/* <MenuItem>DeletePost</MenuItem> */}
                     </Menu>
-                  </Grid>}
+                  </Grid>
+                }
                 title={post.userName}
                 subheader={post.date.substring(0, 10)}
               />

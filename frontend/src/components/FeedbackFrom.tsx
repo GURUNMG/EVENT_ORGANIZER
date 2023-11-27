@@ -12,6 +12,7 @@ import {
   Button,
   TextField,
 } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 interface FeedbackEntry {
   email: string;
@@ -19,44 +20,44 @@ interface FeedbackEntry {
   expectation: number;
   timeManagement: number;
   overallRating: number;
-  suggestion: string;
+  // suggestion: string;
 }
 
 interface FormData {
-  postId: string;
+  // postId: string;
   feedbackEntries: FeedbackEntry;
 }
 
 const FeedbackForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    postId: '',
+    // postId: '',
     feedbackEntries: {
       email: '',
       informationGathered: 0,
       expectation: 0,
       timeManagement: 0,
       overallRating: 0,
-      suggestion: '',
     },
   });
 
+  const { postId } = useParams<{ postId: string }>();
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
       // Send POST request to the server with feedback data
-      await axios.post('/api/feedback', formData);
+      await axios.post(`http://localhost:3001/event/app/v1/feedback/store/${postId}`, formData);
       console.log('Feedback data submitted successfully.');
       // Clear the form data if needed
       setFormData({
-        postId: '',
+        // postId: '',
         feedbackEntries: {
           email: '',
           informationGathered: 0,
           expectation: 0,
           timeManagement: 0,
           overallRating: 0,
-          suggestion: '',
         },
       });
     } catch (error) {
@@ -185,7 +186,7 @@ const FeedbackForm: React.FC = () => {
                 </div>
               </FormControl>
             </div>
-            <TextField
+            {/* <TextField
               label="Suggestion"
               type="text"
               fullWidth
@@ -199,7 +200,7 @@ const FeedbackForm: React.FC = () => {
                 })
               }
               style={{ marginTop: '16px' }}
-            />
+            /> */}
             <Button type="submit" variant="contained" fullWidth style={{ marginTop: '16px' }}>
               Submit Feedback
             </Button>

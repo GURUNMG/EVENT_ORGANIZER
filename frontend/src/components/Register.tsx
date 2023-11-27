@@ -8,7 +8,7 @@ import logo from "../image/logo2.png"
 import GoogleIcon from '@mui/icons-material/Google';
 import Link from '@mui/material/Link';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
-
+import checkValidEmail from '../helper/checkValidEmail';
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref,
@@ -32,19 +32,20 @@ export const Register=()=>{
      const cpassword=useRef<HTMLInputElement>(null)
      const navigate = useNavigate();   
     
-   const type1=(e:React.FormEvent<HTMLFormElement>)=>{
+  const type1=async (e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
     const name =nameValue.current?.value || '';
     const email=emailValue.current?.value || '';
     const pass=password.current?.value || '';
     const cpass=cpassword.current?.value || '';
     const regex=new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$!@%^&*()]).{8,}')
-    
     if(regex.test(pass)){
       if(pass===cpass){
         console.log("hehehe")
-        axios.post("http://localhost:3001/event/app/v1/user/register",{userName:name,email:email,password:pass})
-        .then((response)=>{
+        const isValidEmail = await checkValidEmail(email)
+        if(isValidEmail){
+          await axios.post("http://localhost:3001/event/app/v1/user/register",{userName:name,email:email,password:pass})
+          .then((response)=>{
             // alert("logged in successfully");
             if(response.status === 201){
               setMessage(true)
@@ -54,13 +55,16 @@ export const Register=()=>{
               navigate('/event/app/v1/login');
             },2000)  
             }     
-
           }).catch((error)=>{
             console.log(error)
             setMessage(true)
             setAlertSeverity("error")
             setResponseMessage(error.message)
-          })        
+          })
+        }
+        else {
+          alert("Enter Deliverable mail")
+        }  
         }
       else{
         alert("incorrect password")
@@ -109,4 +113,3 @@ export const Register=()=>{
       </Snackbar>
      </>
 )}
-

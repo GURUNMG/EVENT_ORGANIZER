@@ -1,4 +1,3 @@
-// services/feedbackService.js
 const Feedback = require('../models/Feedback');
 
 // Function to save new feedback entry
@@ -17,9 +16,11 @@ const saveFeedbackEntry = async (postId, feedbackEntry) => {
 
     // Save the updated feedback document
     await feedback.save();
+
+    return { success: true, message: 'Feedback entry saved successfully.' };
   } catch (error) {
-    console.error('Error storing feedback entry:', error);
-    throw new Error('Failed to store feedback entry.');
+    console.error('Error saving feedback entry:', error);
+    return { success: false, message: 'Internal server error.' };
   }
 };
 
@@ -30,14 +31,14 @@ const getAllFeedbackForPost = async (postId) => {
     const feedback = await Feedback.findOne({ postId });
 
     if (!feedback) {
-      throw new Error('Feedback not found.');
+      return { success: false, message: 'Feedback not found.' };
     }
 
     // Return all feedback entries for the given postId
-    return feedback.feedbackEntries;
+    return { success: true, feedbackEntries: feedback.feedbackEntries };
   } catch (error) {
     console.error('Error getting feedback:', error);
-    throw new Error('Failed to get feedback.');
+    return { success: false, message: 'Internal server error.' };
   }
 };
 
@@ -45,3 +46,19 @@ module.exports = {
   saveFeedbackEntry,
   getAllFeedbackForPost,
 };
+
+
+// const feedbackController = require('../controllers/feedbackController');
+
+// const saveFeedbackEntry = async (postId, feedbackEntry) => {
+//   return await feedbackController.saveFeedbackEntry(postId, feedbackEntry);
+// };
+
+// const getAllFeedbackForPost = async (postId) => {
+//   return await feedbackController.getAllFeedbackForPost(postId);
+// };
+
+// module.exports = {
+//   saveFeedbackEntry,
+//   getAllFeedbackForPost,
+// };

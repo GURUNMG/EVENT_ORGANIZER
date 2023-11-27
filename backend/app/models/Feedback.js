@@ -10,7 +10,6 @@ const feedbackSchema = new mongoose.Schema({
       expectation: Number,
       timeManagement: Number,
       overallRating: Number,
-      suggestion: String
     },
   ],
 });
