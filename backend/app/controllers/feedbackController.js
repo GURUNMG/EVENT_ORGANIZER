@@ -5,7 +5,7 @@ const submitFeedback = async (req, res) => {
   try {
     const { postId } = req.params;
     const { feedbackEntries } = req.body;
-
+    // console.log(feedbackEntries);
     const result = await feedbackService.saveFeedbackEntry(postId, feedbackEntries);
 
     if (result.success) {

@@ -11,8 +11,18 @@ const saveFeedbackEntry = async (postId, feedbackEntry) => {
       feedback = new Feedback({ postId, feedbackEntries: [] });
     }
 
-    // Add the new feedback entry to the array
-    feedback.feedbackEntries.push(feedbackEntry);
+    // Check if the user has already submitted feedback
+    const existingEntryIndex = feedback.feedbackEntries.findIndex(
+      (entry) => entry.email === feedbackEntry.email
+    );
+
+    if (existingEntryIndex !== -1) {
+      // If the user has already submitted feedback, update the existing entry
+      feedback.feedbackEntries[existingEntryIndex] = feedbackEntry;
+    } else {
+      // If the user has not submitted feedback, add a new entry
+      feedback.feedbackEntries.push(feedbackEntry);
+    }
 
     // Save the updated feedback document
     await feedback.save();

@@ -30,7 +30,7 @@ const PostDisplay = () => {
 
   const { email } = useParams<{ email: string }>();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+  const [isFbButtonEnabled, setIsFbButtonEnabled] = useState(false);
   
   const open1 = Boolean(null);  // Note: I've changed this line to avoid errors, you may need to replace it with your logic.
 
@@ -80,7 +80,7 @@ const PostDisplay = () => {
   
       setHandledPosts([...handledPosts, postId]);
       setRegisteredPosts([...registeredPosts, postId]);
-  
+      setIsFbButtonEnabled(true);
       // Save registered posts to local storage
       saveRegisteredPostsToLocalStorage([...registeredPosts, postId]);
   
@@ -122,7 +122,7 @@ const PostDisplay = () => {
   const navigate = useNavigate();  
   const handleFeedbackClick = (postId: string) => {
     // Redirect to the feedback page
-    navigate(`/event/app/v1/feedback/store/${postId}`);
+    navigate(`/event/app/v1/feedback/store/${email}/${postId}`);
     // navigate('/feedback/app/v1/login')
   };
 
@@ -132,32 +132,37 @@ const PostDisplay = () => {
         <Grid key={post._id}>
           <Grid container display="flex" justifyContent="center">
             <Card sx={{ maxWidth: 370, maxHeight: 500, mx: 'auto', my: 5 }}>
-              <CardHeader
-                avatar={<Avatar />}
-                action={
-                  <Grid>
-                    {(email === post.email)? ( // Check if email values are equal
-                      <IconButton onClick={handleClick}>
-                        <MoreVertIcon />
-                      </IconButton>
-                    ): (<Button variant="contained" onClick={() => handleFeedbackClick(post._id)}>FB</Button>)}
-                    {/* <IconButton onClick={handleClick}>
+            <CardHeader
+              avatar={<Avatar />}
+              action={
+                <Grid>
+                  {email === post.email ? (
+                    <IconButton onClick={handleClick}>
                       <MoreVertIcon />
-                    </IconButton> */}
-                    <Menu
-                      id="item"
-                      anchorEl={anchorEl}
-                      open={Boolean(anchorEl)}
-                      onClose={handleClose}
+                    </IconButton>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      onClick={() => handleFeedbackClick(post._id)}
+                      disabled={!Boolean(userOptions.find(option => option?.postId === post._id))}
                     >
-                      <MenuItem>Enable Feedcack</MenuItem>
-                      {/* <MenuItem>DeletePost</MenuItem> */}
-                    </Menu>
-                  </Grid>
-                }
-                title={post.userName}
-                subheader={post.date.substring(0, 10)}
-              />
+                      FB
+                    </Button>
+                  )}
+                  <Menu
+                    id="item"
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    <MenuItem>Enable Feedback</MenuItem>
+                  </Menu>
+                </Grid>
+              }
+              title={post.userName}
+              subheader={post.date.substring(0, 10)}
+            />
+
               {post.image != null &&
                 <CardMedia
                   component="img"

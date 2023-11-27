@@ -10,62 +10,100 @@ import {
   Checkbox,
   Typography,
   Button,
+  Snackbar,
+  Alert,
   TextField,
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 interface FeedbackEntry {
-  email: string;
+  email: string | undefined;
   informationGathered: number;
   expectation: number;
   timeManagement: number;
   overallRating: number;
-  // suggestion: string;
+  suggestion: string; // Placeholder for an additional field
 }
 
 interface FormData {
-  // postId: string;
   feedbackEntries: FeedbackEntry;
 }
 
 const FeedbackForm: React.FC = () => {
+  const { postId, email } = useParams<{ postId: string; email: string }>();
   const [formData, setFormData] = useState<FormData>({
-    // postId: '',
     feedbackEntries: {
-      email: '',
+      email: email,
       informationGathered: 0,
       expectation: 0,
       timeManagement: 0,
       overallRating: 0,
+      suggestion: '', // Initialize the additional field
     },
   });
 
-  const { postId } = useParams<{ postId: string }>();
-  
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'info' | 'warning'>('success');
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (
+      formData.feedbackEntries.informationGathered === 0 ||
+      formData.feedbackEntries.expectation === 0 ||
+      formData.feedbackEntries.timeManagement === 0 ||
+      formData.feedbackEntries.overallRating === 0
+    ) {
+      // Show an error message (you can customize this part)
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Please select a value for each category.');
+      setOpenSnackbar(true);
+      return;
+    }
+
     try {
       // Send POST request to the server with feedback data
-      await axios.post(`http://localhost:3001/event/app/v1/feedback/store/${postId}`, formData);
+      await axios.post(`http://localhost:3001/event/app/v1/feedback/store/${email}/${postId}`, formData);
       console.log('Feedback data submitted successfully.');
+      console.log(formData);
       // Clear the form data if needed
       setFormData({
-        // postId: '',
         feedbackEntries: {
-          email: '',
+          email: email,
           informationGathered: 0,
           expectation: 0,
           timeManagement: 0,
           overallRating: 0,
+          suggestion: '', // Reset the additional field
         },
       });
+
+      // Show success message
+      setSnackbarSeverity('success');
+      setSnackbarMessage('Feedback saved successfully');
+      setOpenSnackbar(true);
+
+      // Redirect to the desired page after a delay (adjust the time as needed)
+      setTimeout(() => {
+        navigate(`/event/app/v1/homepage/${email}`);
+      }, 2000);
     } catch (error) {
       console.error('Error submitting feedback data:', error);
+
+      // Show error message
+      setSnackbarSeverity('error');
+      setSnackbarMessage('Error submitting feedback');
+      setOpenSnackbar(true);
     }
   };
 
   const numericValues = [1, 2, 3, 4, 5];
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
 
   return (
     <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
@@ -186,10 +224,12 @@ const FeedbackForm: React.FC = () => {
                 </div>
               </FormControl>
             </div>
-            {/* <TextField
-              label="Suggestion"
+            {/* Additional text field (you can add more fields as needed) */}
+            <TextField
+              label="Suggestions"
               type="text"
               fullWidth
+              required
               multiline
               rows={4}
               value={formData.feedbackEntries.suggestion}
@@ -200,13 +240,20 @@ const FeedbackForm: React.FC = () => {
                 })
               }
               style={{ marginTop: '16px' }}
-            /> */}
+            />
             <Button type="submit" variant="contained" fullWidth style={{ marginTop: '16px' }}>
               Submit Feedback
             </Button>
           </form>
         </CardContent>
       </Card>
+
+      {/* Snackbar for displaying messages */}
+      <Snackbar open={openSnackbar} autoHideDuration={2000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 };

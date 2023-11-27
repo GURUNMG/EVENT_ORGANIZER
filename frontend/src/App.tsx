@@ -35,7 +35,7 @@ import FeedbackForm from './components/FeedbackFrom';
           <Route path="event/app/v1/admin-login" element={<AdminLogin/>} />
           <Route path="/event/app/v1/homepage/:email" element={<Postdisplay/>}></Route>
           <Route path="/event/app/v1/admin-homepage/:email" element={<AdminHome/>}></Route>
-          <Route path="/event/app/v1/feedback/store/:postId" element={<FeedbackForm/>}></Route>
+          <Route path="/event/app/v1/feedback/store/:email/:postId" element={<FeedbackForm/>}></Route>
           {/* <Route path="/chatease/register" element={<Register/>}></Route> */}
           {/* <Route path='/chatease/reset' element={<Forgot/>}></Route>    */}
       </Routes>
