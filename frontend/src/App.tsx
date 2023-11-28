@@ -10,6 +10,7 @@ import Postdisplay from './components/Postdisplay';
 import FeedbackForm from './components/FeedbackFrom';
 import FeedbackChart from './components/FeedbackChart';
 import OverallFeedbackChart from './components/OverallFeedbackChart';
+import Profile from './components/Profile';
 
  function App(){
   
@@ -27,6 +28,7 @@ import OverallFeedbackChart from './components/OverallFeedbackChart';
           <Route path="/event/app/v1/feedback/store/:email/:postId" element={<FeedbackForm/>}></Route>
           <Route path='/event/app/v1/feedbackchart/:postId' element={<FeedbackChart/>}></Route>
           <Route path='/event/app/v1/overallchart/:postId' element={<OverallFeedbackChart/>}></Route>
+          <Route path='/event/app/v1/profile/:email' element={<Profile/>}></Route>
           {/* <Route path="/chatease/register" element={<Register/>}></Route> */}
           {/* <Route path='/chatease/reset' element={<Forgot/>}></Route>    */}
       </Routes>

@@ -17,3 +17,66 @@
                 title={post.userName}
                 subheader={post.date.substring(0, 10)}
               /> */}
+
+
+
+
+
+
+              
+
+// import { makeStyles, Paper, Avatar, Typography, Grid } from '@mui/material';
+// import React from 'react';
+// import Navbar from './Navbar';
+
+
+// // const useStyles = makeStyles((theme: any) => ({
+// //   root: {
+// //     display: 'flex',
+// //     flexDirection: 'column',
+// //     alignItems: 'center',
+// //     padding: theme.spacing(3),
+// //   },
+// //   avatar: {
+// //     width: theme.spacing(10),
+// //     height: theme.spacing(10),
+// //     marginBottom: theme.spacing(2),
+// //   },
+// // }));
+
+// const obj = {
+//     name: "guru",
+//     age: 22,
+//     noOfEventAttended:2,
+//     eventsRegistered:3,
+//   }
+// const Profile = () => {
+// //   const classes = useStyles();
+
+//   return (
+//     <Grid>
+//         {/* <Navbar></Navbar>  */}
+//       <Grid item>
+//         <Paper  elevation={3}>
+//         <Avatar  src="/path/to/dummy/photo.jpg" />
+//         <Typography variant="h5" gutterBottom>
+//             {obj.name}
+//         </Typography>
+//         <Typography variant="subtitle1" color="textSecondary">
+//             Age: {obj.age}
+//         </Typography>
+//         <Typography variant="subtitle1" color="textSecondary">
+//             Events Attended: {obj.noOfEventAttended}
+//         </Typography>
+//         <Typography variant="subtitle1" color="textSecondary">
+//             Events Registered: {obj.eventsRegistered}
+//         </Typography>
+//         </Paper>
+//       </Grid>
+//     </Grid>
+    
+//   );
+// };
+
+// export default Profile;
+

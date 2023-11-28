@@ -8,7 +8,8 @@ import Postdisplay from "./Postdisplay";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { useNavigate, useParams } from "react-router-dom";
-const AdminHome = () => {
+
+const Navbar = () => {
   const [isHoveredHome, setIsHoveredHome] = useState<boolean>(false);
   const [IsHoveredProfile, setIsHoveredProfile] = useState<boolean>(false);
   const handleMouseEnter = () => {
@@ -179,23 +180,7 @@ const AdminHome = () => {
           </Button>
         </Grid>
       </Grid>
-      {/* <Grid container justifyContent="center" sx={{ marginTop: "30px" }}> */}
-        {/* <Grid item> */}
-        {/* </Grid> */}  
-      {/* </Grid> */}
-      <Grid container sx={{ marginTop: "30px", marginLeft: "22%" }}>
-        <Grid item>
-          <Userpost />
-        </Grid>
-      </Grid>
-        <Postdisplay />
     </div>
   );
 };
-export default AdminHome;
-
-
-      {/* <Grid container justifyContent="center" sx={{ marginTop: "30px" }}> */}
-        {/* <Grid item> */}
-        {/* </Grid> */}  
-      {/* </Grid> */}
+export default Navbar;

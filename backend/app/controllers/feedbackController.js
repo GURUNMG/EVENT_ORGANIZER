@@ -23,7 +23,6 @@ const submitFeedback = async (req, res) => {
 const getAllFeedbackForPost = async (req, res) => {
   try {
     const { postId } = req.params;
-
     const result = await feedbackService.getAllFeedbackForPost(postId);
 
     if (result.success) {

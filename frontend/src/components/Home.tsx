@@ -7,6 +7,7 @@ import Userpost from "./Userpost";
 import Postdisplay from "./Postdisplay";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
+import { useNavigate, useParams } from "react-router-dom";
 const Home = () => {
   const [isHoveredHome, setIsHoveredHome] = useState<boolean>(false);
   const [IsHoveredProfile, setIsHoveredProfile] = useState<boolean>(false);
@@ -22,6 +23,18 @@ const Home = () => {
   const handleMouseLeaveProfile = () => {
     setIsHoveredProfile(false);
   };
+
+  const { email } = useParams<{ email: string }>();
+  
+  const navigate = useNavigate();
+  const handleHomeClick = () =>{
+    navigate(`/event/app/v1/homepage/${email}`);
+
+  }
+
+  const handleProfileClick = () => {
+    navigate(`/event/app/v1/profile/${email}`);
+  }
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -124,6 +137,7 @@ const Home = () => {
             size="large"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onClick={() => {handleHomeClick()}}
             style={{
               color: isHoveredHome ? "black" : "gray",
               border: "none",
@@ -145,6 +159,7 @@ const Home = () => {
             size="large"
             onMouseEnter={handleMouseEnterProfile}
             onMouseLeave={handleMouseLeaveProfile}
+            onClick={()=> {handleProfileClick()}}
             style={{
               color: IsHoveredProfile ? "black" : "gray",
               border: "none",
