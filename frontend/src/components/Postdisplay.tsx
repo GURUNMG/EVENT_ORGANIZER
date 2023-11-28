@@ -127,7 +127,12 @@ const PostDisplay = () => {
     // navigate('/feedback/app/v1/login')
   };
   const isLaptopSize = useMediaQuery('(min-width: 960px)');
-
+  const handleFeedbackChartClick = (postId: string) => {
+    navigate(`/event/app/v1/feedbackchart/${postId}`)
+  }
+  const handleAverageFeedbackClick = (postId: string) => {
+    navigate(`/event/app/v1/overallchart/${postId}`)
+  }
   return (
     <>
     <Grid container>
@@ -160,6 +165,8 @@ const PostDisplay = () => {
                     onClose={handleClose}
                   >
                     <MenuItem>Enable Feedback</MenuItem>
+                    <MenuItem onClick={() => {handleFeedbackChartClick(post._id)}}>Feedback chart</MenuItem>
+                    <MenuItem onClick={() => {handleAverageFeedbackClick(post._id)}}>Average Feedback</MenuItem>
                   </Menu>
                 </Grid>
               }
