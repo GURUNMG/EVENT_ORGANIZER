@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import {  useNavigate, useParams } from 'react-router-dom';
+import About from './About';
 
 interface ProfilePageProps {
   // Add any necessary props or authentication information here
@@ -173,6 +174,7 @@ const ProfilePage: React.FC<ProfilePageProps> = () => {
           </CardContent>
         </Card>
       </Grid>
+      <About></About>
     </Grid>
   );
 };

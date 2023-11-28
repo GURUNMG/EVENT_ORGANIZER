@@ -11,19 +11,20 @@ import FeedbackForm from './components/FeedbackFrom';
 import FeedbackChart from './components/FeedbackChart';
 import OverallFeedbackChart from './components/OverallFeedbackChart';
 import Profile from './components/Profile';
+import UserHome from './components/UserHome';
+import About from './components/About';
 
  function App(){
   
   return (
     <div className='App'> 
-    {/* <FeedbackChart></FeedbackChart> */}
     <BrowserRouter>
       <Routes>
           <Route path="event/app/v1/" element={<Frontpage/>} />
           <Route path="event/app/v1/admin-register" element={<AdminRegister/>} />
           <Route path="event/app/v1/login" element={<Signin/>} />
           <Route path="event/app/v1/admin-login" element={<AdminLogin/>} />
-          <Route path="/event/app/v1/homepage/:email" element={<Postdisplay/>}></Route>
+          <Route path="/event/app/v1/homepage/:email" element={<UserHome/>}></Route>
           <Route path="/event/app/v1/admin-homepage/:email" element={<AdminHome/>}></Route>
           <Route path="/event/app/v1/feedback/store/:email/:postId" element={<FeedbackForm/>}></Route>
           <Route path='/event/app/v1/feedbackchart/:postId' element={<FeedbackChart/>}></Route>
