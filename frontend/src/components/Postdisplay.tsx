@@ -126,6 +126,11 @@ const PostDisplay: React.FC = () => {
           console.error('Error:', error.message);
         });
     }
+    axios.post(`http://localhost:3001/event/app/v1/sendemail/${email}`).then((response)=>{
+      console.log("email sent");
+    }).catch((erro)=>{
+      console.log("error");
+    })
   };
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
